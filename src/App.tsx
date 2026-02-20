@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line, LineChart, Legend } from "recharts";
 
 // ─── Harvard Color Palette ───────────────────────────────────────────────────
@@ -94,7 +94,7 @@ const steps = [
   { id: 7, title: "Step 7: Omitted Variable Bias", subtitle: "What happens when we drop variables", color: H.crimsonDark },
 ];
 
-const CoeffCard = ({ label, value, se, tStat, color, interpretation }) => {
+const CoeffCard = ({ label, value, se, tStat, color, interpretation }: { label: string; value: string; se: string; tStat: string; color: string; interpretation: string }) => {
   const tNum = parseFloat(tStat);
   const sig = Math.abs(tNum) > 2;
   return (
@@ -115,7 +115,7 @@ const CoeffCard = ({ label, value, se, tStat, color, interpretation }) => {
   );
 };
 
-const CustomTooltip = ({ active, payload }) => {
+const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
   if (active && payload && payload.length) {
     const d = payload[0].payload;
     return (
@@ -129,7 +129,7 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-const InfoBox = ({ accentColor, label, children }) => (
+const InfoBox = ({ accentColor, label, children }: { accentColor: string; label?: string; children: React.ReactNode }) => (
   <div style={{ background: `${accentColor}08`, border: `1px solid ${accentColor}35`, borderRadius: 10, padding: "18px 22px", marginBottom: 20 }}>
     {label && <div style={{ color: accentColor, fontSize: 11, fontFamily: "monospace", letterSpacing: 2, fontWeight: 700, marginBottom: 8 }}>{label}</div>}
     {children}
@@ -138,7 +138,7 @@ const InfoBox = ({ accentColor, label, children }) => (
 
 export default function App() {
   const [step, setStep] = useState(0);
-  const [xVar, setXVar] = useState("price");
+  const [xVar, setXVar] = useState<"price" | "income" | "temp">("price");
   const currentStep = steps[step];
   const scatterData = data.map((d) => ({ ...d, x: d[xVar], y: d.Y }));
 
@@ -234,7 +234,7 @@ export default function App() {
             </p>
             <div style={{ display: "flex", gap: 8, marginBottom: 22 }}>
               {Object.entries(xVarMeta).map(([key, meta]) => (
-                <button key={key} onClick={() => setXVar(key)} style={{
+                <button key={key} onClick={() => setXVar(key as "price" | "income" | "temp")} style={{
                   padding: "7px 18px", borderRadius: 4, border: `1px solid ${xVar === key ? meta.color : H.tan}`,
                   cursor: "pointer", fontSize: 13, fontWeight: 600, fontFamily: "'Georgia', serif",
                   background: xVar === key ? meta.color : H.white,
