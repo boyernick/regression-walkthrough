@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line, LineChart, Legend } from "recharts";
 
 // ─── Harvard Color Palette ───────────────────────────────────────────────────
@@ -510,6 +511,8 @@ export default function App() {
           }}>Next →</button>
         </div>
       </div>
+
+      <Analytics />
 
       {/* Footer */}
       <div style={{ borderTop: `1px solid ${H.tan}`, padding: "14px 32px", background: H.parchment, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
